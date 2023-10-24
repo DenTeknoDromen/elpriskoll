@@ -7,21 +7,16 @@
             <div class="col-10 border p-3">
                 <h1 class="text-center">Form</h1>
                 <form action="api" method="post">
-                    <label for="year">Year:</label><br/>
-                    <input type="text" id="year" name="year"><br/>
+                    <label for="date">Date:</label><br/>
+                    <input type="text" id="date" name="date" placeholder="{{curr_date}}"><br/>
 
                     <!-- Prisklass dropdown -->
-                    <label for="pricegroup">Prisklass:</label><br/>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Prisklass
-                        </a>                      
-                        <ul class="dropdown-menu">
-                            {% for class in price_class %}
-                            <li><a class="dropdown-item" href="#">{{class}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    <label for="priceclass">Prisklass:</label>                     
+                    <select name="priceclass" id="priceclass" class="form-select">   
+                        {% for class in price_class %}                             
+                            <option value="{{class[0:3]}}">{{class}}</option>                         
+                        {% endfor %}                     
+                    </select>
                     
                     <!-- Sumbit button -->
                     <button type="submit" class="btn btn-primary mt-5">Submit</button>
