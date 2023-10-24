@@ -29,7 +29,7 @@ def _post_api():
         print("Det här ska vara en error!")
     
     testurl = "https://www.elprisetjustnu.se/api/v1/prices/2023/10-24_SE3.json"
-    api_url = testurl #f"https://www.elprisetjustnu.se/api/v1/prices/{date[0:5]}/{[date[6:]]}_SE3.json"
+    api_url = f"https://www.elprisetjustnu.se/api/v1/prices/{date[0:4]}/{date[5:]}_{pricegroup}.json"
     data = get_apidf(api_url)
 
     return render_template("print.html", data=data)
