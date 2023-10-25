@@ -8,40 +8,46 @@ import plotly.express as px
 
 # Att göra:
 # plotly på apin, snyggare presentation av data
-# Fixa errormedelande vid ogiltig input
-# Fixa placeholder
-# Fixa errorhandering (404, 405)
 # Ska kunna installeras också
 # Snygga till html
-# en till endpoint?
-# Gör en favicon
+# fler testcase
 
 
 app = Flask(__name__)
-price_class = ["SE1 = Luleå / Norra Sverige", 
-                "SE2 = Sundsvall / Norra Mellansverige", 
-                "SE3 = Stockholm / Södra Mellansverige", 
-                "SE4 = Malmö / Södra Sverige "]
-
+price_class = ["SE1: Luleå / Norra Sverige", 
+                "SE2: Sundsvall / Norra Mellansverige", 
+                "SE3: Stockholm / Södra Mellansverige", 
+                "SE4: Malmö / Södra Sverige "]
 
 @app.route("/index")
 def index():
-    curr_date = get_currdate()
+    curr_date = f"tex: {get_currdate()}"
     return render_template("form.html", price_class=price_class, curr_date=curr_date)
 
-@app.route("/api", methods=["GET", "POST"])
+@app.route("/api", methods=["POST"])
 def post_api():
 
     date = request.form["date"]
     pricegroup = request.form["priceclass"]
 
     if verify_date(date) == False:
-        # Error message  och felhantering här
-        print("Det här ska vara en error!")
-    
-    data = get_graph(date, pricegroup)
-    return render_template("print.html", data=data)
+        return redirect("/index")
+    else:
+        data = get_graph(date, pricegroup)
 
-@app.route("/searchresults")
-def searchresults():
-    return "Hello World!"
+    # Dubbelkoll ifall apin har returneat data
+    # Är tex inte alltid säkert att api uppdaterat inför morgondagen
+    if type(data) == ValueError:
+        return redirect("/index")
+    else:
+        return render_template("print.html", data=data)
+
+# Hanterar error 404 genom redirect
+@app.errorhandler(404)
+def page_notfound(error):
+    return redirect("/index")
+
+# Hanterar error 405 genom redirect
+@app.errorhandler(405)
+def api_get(error):
+    return redirect("/index")
