@@ -3,7 +3,16 @@ import pandas
 import ssl
 import json
 import plotly.express as px
-from datefunc import verify_date, get_pastdate
+from application.datefunc import verify_date
+
+
+def verify_input(date, pricegroup):
+    if verify_date(date) == False:
+        return False
+    elif pricegroup == "No ":
+        return False
+    else:
+        return True
 
 
 def get_api(date, pricegroup):
@@ -14,37 +23,27 @@ def get_api(date, pricegroup):
         data = json.loads(json_data)
         df = pandas.DataFrame(data)
         return df
-    
+
     except Exception as e:
         return e
 
-def get_graph(date, pricegroup, columns=None):
-    try:
-        #df = pandas.DataFrame(data)
 
-        # Dubbelkolla denna kod
-        # if columns == None:
-        #     html_df = df.to_html(classes="table p-5", justify="left", index=False)
-        # else:
-        #     html_df = df.to_html(columns=columns, classes="table p-5", justify="left", index=False)
-        data = get_api(date,pricegroup)
-        fig = px.line(data, x="time_start", y="SEK_per_kWh", title=f"Elpris per timme den {date}", template="plotly_dark")
-        fig.update_traces(line={"width":10}) 
-                          #line_color="#ff4500")
-        
-        # date = get_pastdate(date)
-        # if verify_date(date) == True:
-        #     data_2 = get_api(date, pricegroup)
-        #     fig.add_trace(data_2)    #,  line={"width":7}, line_color="#6495ed")
+def get_graph(data, data_opt, lst_dates):
+    try:     
+        # Lägger till en column i data och anger namnet till plotlylistan
+        if type(data_opt) != bool:
+            data = data.assign(SEK_per_kWh_2=data_opt["SEK_per_kWh"])
+            data = data.rename(columns= {"SEK_per_kWh_2":lst_dates[1]})
 
-        diagram = fig.to_html()  
+        data = data.rename(columns= {"SEK_per_kWh":lst_dates[0], "time_start":"Time of day"})
+
+        fig = px.line(data, x="Time of day", y=lst_dates,
+                      title="Elpris per timme", template="plotly_dark")
+        fig.update_traces(mode="markers+lines", hovertemplate=None)
+        fig.update_layout(hovermode="x")
+
+        diagram = fig.to_html()
         return diagram
-    
+
     except Exception as e:
         return e
-
-
-
-
-
-    

@@ -1,34 +1,60 @@
 {% extends "layout.html" %}
 {% block title %}Form{% endblock %}
 {% block content %}
-    <div class="containers" >
-        <div class="row p-5">
-            <div class="col-1"></div>
-            <div class="col-10 border p-3 bg-dark">
-                <h1 class="text-center">Form</h1>
-                <div class="col-2"></div>
-                <div class="col-6">
-                <form action="api" method="post" class="was-validated">
-                    <label for="date">Datum:</label><br/>
-                    <input type="text" id="date" name="date" placeholder="{{curr_date}}" required><br/>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback">Invalid input</div>
+    <div class="container" >
+        <form action="api" method="post" class="was-validated">
+            <div class="row p-5">
+                <div class="col-1"></div>
+                <div class="col-10 border p-3" style="background-color:#111111">
+                    <h1 class="text-center">Ange datum och Prisklass:</h1>
+                    <div class="col-2"></div>
+                    <div class="col-5">
+                    <!-- input form -->
+                    <form action="api" method="post" class="was-validated">
+                        <label for="date">Datum:</label><br/>
+                        <input type="text" id="date" name="date" placeholder="{{curr_date}}" required><br/>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Invalid input</div>
 
-                    <!-- Prisklass dropdown -->
-                    <label for="priceclass">Prisklass:</label>                     
-                    <select name="priceclass" id="priceclass" class="form-select">   
-                        {% for class in price_class %}                             
-                            <option value="{{class[0:3]}}">{{class}}</option>                         
-                        {% endfor %}                     
-                    </select>
-                    
-                    <!-- Sumbit button -->
-                    <button type="submit" class="btn btn-primary mt-5">Submit</button>
-                </form>
-                </div>
-                <div class="col-2"></div>
-            </div>    
-            <div class="col-1"></div>
-        </div>
+                        <!-- Prisklass dropdown -->
+                        <label for="priceclass">Prisklass:</label>                     
+                        <select name="priceclass" id="priceclass" class="form-select">   
+                            {% for class in price_class %}                             
+                                <option value="{{class[0:3]}}">{{class}}</option>                         
+                            {% endfor %}                     
+                        </select>
+                        
+                        <!-- Sumbit button -->
+                        <button type="submit" class="btn btn-primary mt-5">Submit</button>
+
+                    </div>
+                    <div class="col-2"></div>
+                </div>    
+                <div class="col-1"></div>
+            </div>
+            <!-- Alternativ input -->
+            <div class="row p-5">
+                <div class="col-1"></div>
+                <div class="col-10 border p-3" style="background-color:#111111">
+                    <p class="text-center">Ange datum eller prisklass att jämföra med (valfri)</p>
+                    <div class="col-2"></div>
+                    <div class="col-5">                     
+                    <!-- input form -->
+                            <label for="date_opt">Datum:</label><br/>
+                            <input type="text" id="date_opt" name="date_opt" placeholder="{{curr_date}}"><br/>
+                            <!-- Prisklass dropdown -->
+                            <label for="pricegroup_opt">Prisklass:</label>                     
+                            <select name="pricegroup_opt" id="pricegroup_opt" class="form-select">   
+                                {% for class in price_class %}                             
+                                    <option value="{{class[0:3]}}">{{class}}</option>                         
+                                {% endfor %}                     
+                            </select>
+                        </form>
+                    </div>
+                    <div class="col-2"></div>
+                </div>    
+                <!--<div class="col-1"></div>-->
+            </div>
+        </form>            
     </div>
 {% endblock %}

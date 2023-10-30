@@ -15,11 +15,6 @@ def verify_date(form_date):
     
     return True
 
-def get_pastdate(indate):
-    past_date = date.fromisoformat(indate)
-    past_date -= timedelta(31)
-    return str(past_date)
-
 # Returnerar dagens datum, används för att ge exempel på input i form
 def get_currdate():
     return str(date.today())
