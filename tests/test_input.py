@@ -3,7 +3,9 @@ from flask import g, session
 import ssl
 from urllib import request, response
 
-context = ssl._create_unverified_context()
+#context = ssl._create_unverified_context()
 
-def test_input():
-    assert request.urlopen("http://127.0.0.1:5000/index", context=context, timeout=10)
+#def test_input():
+@pytest.fixture
+def client():
+    app = test_client

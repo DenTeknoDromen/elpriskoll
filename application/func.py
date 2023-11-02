@@ -5,7 +5,10 @@ import json
 import plotly.express as px
 from application.datefunc import verify_date
 
-
+# Verifierar inputen via verify_input
+# "No " är första bokstäverna i "No input"
+# som används för att visa att man inte vill använda 
+# den andra formen
 def verify_input(date, pricegroup):
     if verify_date(date) == False:
         return False
@@ -14,7 +17,7 @@ def verify_input(date, pricegroup):
     else:
         return True
 
-
+# Hämtar apit med parametrar från input, returnerar det direkt som en pandas dataframe
 def get_api(date, pricegroup):
     url = f"https://www.elprisetjustnu.se/api/v1/prices/{date[0:4]}/{date[5:]}_{pricegroup}.json"
     context = ssl._create_unverified_context()
@@ -27,7 +30,9 @@ def get_api(date, pricegroup):
     except Exception as e:
         return e
 
-
+# Tar 1-2 dataframes och sätter ihop dem till en graf
+# döper även om namnet på kolumnerna
+# returnerar dem som ett html diagram
 def get_graph(data, data_opt, lst_dates):
     try:     
         # Lägger till en column i data och anger namnet till plotlylistan

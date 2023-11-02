@@ -1,10 +1,17 @@
 import pytest
-from datetime import timedelta
+from datetime import date, timedelta
 from application.func import verify_input
 from application.datefunc import get_currdate, verify_date
 
-future = str(get_currdate() + timedelta(2))
-wronginputs = ["23-24-62", "1995-11-25", "2022-10-31", "Wrong input", "future", ]
+future = str(date.today() + timedelta(2))
+toolong = "tralala"
+for x in range(10000):
+    toolong += "la"
+wronginputs = ["23-24-62", "1995-11-25", 
+               "2022-10-31", "Wrong input", 
+               future, toolong, 
+               "<h1>HTML Injection testing</h1>", 
+               ]
 
 def test_verify_date():
     for input in wronginputs:
