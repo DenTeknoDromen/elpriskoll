@@ -36,6 +36,7 @@ def get_api(date, pricegroup):
 def get_graph(data, data_opt, lst_dates):
     try:     
         # Lägger till en column i data och anger namnet till plotlylistan
+        # Är det en korrekt dataframe är typen Dataframe annars False
         if type(data_opt) != bool:
             data = data.assign(SEK_per_kWh_2=data_opt["SEK_per_kWh"])
             data = data.rename(columns= {"SEK_per_kWh_2":lst_dates[1]})

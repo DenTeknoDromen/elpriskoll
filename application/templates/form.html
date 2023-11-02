@@ -5,7 +5,7 @@
         <form action="api" method="post" class="was-validated">
             <div class="row p-5">
                 <div class="col-1"></div>
-                <div class="col-10 border p-3" style="background-color:#111111">
+                <div class="col-10 border p-3" style="background: rgba(17, 17, 17, 0.75)">
                     <h1 class="text-center">Ange datum och Prisklass:</h1>
                     <div class="col-2"></div>
                     <div class="col-5">
@@ -35,7 +35,7 @@
             <!-- Alternativ input -->
             <div class="row p-5">
                 <div class="col-1"></div>
-                <div class="col-10 border p-3" style="background-color:#111111">
+                <div class="col-10 border p-3" style="background: rgba(17, 17, 17, 0.75)">
                     <p class="text-center">Ange datum eller prisklass att jämföra med (valfri)</p>
                     <div class="col-2"></div>
                     <div class="col-5">                     
@@ -44,7 +44,7 @@
                             <input type="text" id="date_opt" name="date_opt" placeholder="{{curr_date}}"><br/>
                             <!-- Prisklass dropdown -->
                             <label for="pricegroup_opt">Prisklass:</label>                     
-                            <select name="pricegroup_opt" id="pricegroup_opt" class="form-select">   
+                            <select name="pricegroup_opt" id="pricegroup_opt" class="form-select ">   
                                 {% for class in price_class %}                             
                                     <option value="{{class[0:3]}}">{{class}}</option>                         
                                 {% endfor %}                     

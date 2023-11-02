@@ -6,11 +6,11 @@ import plotly.express as px
 
 # py -m flask --app app run --debug
 
-# Att göra:
-# fler testcase
+def create_app():
+    app = Flask(__name__)
+    return app
 
-
-app = Flask(__name__)
+app = create_app()
 price_class = ["No input", 
                "SE1: Luleå / Norra Sverige", 
                 "SE2: Sundsvall / Norra Mellansverige", 
