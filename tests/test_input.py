@@ -1,22 +1,25 @@
 import pytest
-from flask import g, session
-import ssl
-# from urllib import request, response
-import sys
-import os
-parent = os.path.abspath("")
-sys.path.append(parent)
-from application.app import create_app
+from application.app import app
+from tests.inputs import Inputs
 
-#context = ssl._create_unverified_context()
+i = Inputs()
 
-# #def test_input():
-# @pytest.fixture
-# def client():
-#     app = test_client
+def test_input():
+    app.testing = True
+    client = app.test_client()
+    with client as c:  
+        response = c.post("/api", data={"date": i.inputs["correctinputs"], 
+                                        "priceclass": i.inputs["pricegroups"], 
+                                        "date_opt": "",
+                                        "pricegroup_opt": ""})
+        assert response.status_code == 200
 
-client = create_app()
-response = client.post("index/", data={"date": "2023-11-01", 
-                                       "priceclass": "SE1"})
-
-assert response.status_code == 200
+def test_input_negative():
+    app.testing = True
+    client = app.test_client()
+    with client as c:  
+        response = c.post("/api", data={"date": i.inputs["wronginputs"], 
+                                        "priceclass": i.inputs["pricegroups_2"], 
+                                        "date_opt": "",
+                                        "pricegroup_opt": ""})
+        assert response.status_code == 302

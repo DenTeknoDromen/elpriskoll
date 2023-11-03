@@ -1,16 +1,13 @@
 from flask import Flask, render_template, redirect, request
 from markupsafe import escape
 from application.datefunc import get_currdate
-from func import get_graph, get_api, verify_input
+from application.func import get_graph, get_api, verify_input
 import plotly.express as px
 
 # py -m flask --app app run --debug
 
-def create_app():
-    app = Flask(__name__)
-    return app
+app = Flask(__name__)
 
-app = create_app()
 price_class = ["No input", 
                "SE1: Luleå / Norra Sverige", 
                 "SE2: Sundsvall / Norra Mellansverige", 
